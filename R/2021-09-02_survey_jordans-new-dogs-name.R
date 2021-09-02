@@ -16,8 +16,8 @@ df <- read_sheet(
 # eda -----
 p <- 
   df %>% 
+  filter(bad_email == 0) %>% 
   group_by(names) %>% 
-  
   summarise(n = n()) %>% 
   ggplot(aes(y = reorder(names, n), x = n, fill = names)) + 
   geom_col(color = "black") + 
@@ -31,9 +31,16 @@ p <-
     caption = "Data Source | Google Sheets"
   )
 
+# check plot 
+p
+
+
 # save plot 
 ggsave(
-  filename = here::here("images","2021-09-02_jordans-pet.png"),
+  filename = here::here(
+    "images",
+    "2021-09-02_jordans-pet.png"
+  ),
   plot = p,
   width = 10,
   height = 5
