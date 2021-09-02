@@ -9,14 +9,14 @@ library(gganimate)
 df <- read_sheet(
   "https://docs.google.com/spreadsheets/d/1l3dfi1_8yHRYTYZODdDH5Eu7T0c5S4zwsU27_eTVW-A/edit?resourcekey#gid=1833286313"
 ) %>% 
-  janitor::clean_names()
-
-
+  janitor::clean_names() %>% 
+  mutate(timestamp = lubridate::as_datetime(timestamp))
 
 # eda -----
+# create static plot
 p <- 
   df %>% 
-  filter(bad_email == 0) %>% 
+  filter(clean_email == 1) %>% 
   group_by(names) %>% 
   summarise(n = n()) %>% 
   ggplot(aes(y = reorder(names, n), x = n, fill = names)) + 
@@ -26,6 +26,7 @@ p <-
   theme(legend.position = "none") + 
   labs(
     title = "Jordan's New Dog's Name",
+    subtitle = glue::glue("Out of a total of {sum(df$clean_email, na.rm = TRUE)} responses"),
     y = NULL,
     x = "Count (#)",
     caption = "Data Source | Google Sheets"
@@ -45,4 +46,31 @@ ggsave(
   width = 10,
   height = 5
 )
+
+
+# create gif
+df %>% 
+  filter(clean_email == 1) %>% 
+  group_by(names, timestamp) %>%
+  summarise(n = n()) %>%
+  ggplot(aes(y = reorder(names, n), x = n, fill = names)) + 
+  geom_col(color = "black") + 
+  geom_label(aes(label = n), fill = "white") +
+  theme_minimal() + 
+  theme(legend.position = "none") + 
+  gganimate::transition_reveal(timestamp)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
