@@ -12,7 +12,7 @@ Joke repo for democratizing naming my new dog.
 
 # Winner
 
-![](./images/2021-09-02_jordans-pet.png)
+![](./images/2021-09-02_jordans-pet.gif)
 
 <br>
 
