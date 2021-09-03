@@ -70,12 +70,11 @@ g <-
     caption = "Data Source | Google Sheets"
   )
 
-
 animate(
   g,
   fps = 30,
   duration = 15,
-  end_pause = 5
+  end_pause = 50
 )
 
 gganimate::anim_save(
