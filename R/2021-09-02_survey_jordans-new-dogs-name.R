@@ -11,7 +11,7 @@ df <- read_sheet(
   "https://docs.google.com/spreadsheets/d/1l3dfi1_8yHRYTYZODdDH5Eu7T0c5S4zwsU27_eTVW-A/edit?resourcekey#gid=1833286313"
 ) %>% 
   janitor::clean_names() %>% 
-  mutate(timestamp = round_date(as_datetime(timestamp), "5 mins"))
+  mutate(timestamp = round_date(as_datetime(timestamp), "1 mins"))
 
 # eda -----
 # create static plot
@@ -70,13 +70,15 @@ g <-
     caption = "Data Source | Google Sheets"
   )
 
+# animate 
 animate(
   g,
   fps = 30,
   duration = 15,
-  end_pause = 50
+  end_pause = 70
 )
 
+# save animation
 gganimate::anim_save(
   filename =  "2021-09-02_jordans-pet.gif",
   path = here::here("images"),
